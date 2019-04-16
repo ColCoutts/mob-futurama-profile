@@ -58,7 +58,7 @@ describe('profile app', () => {
                     favoriteCharacter: 'Leela',
                     tagline: expect.any(String),
                     _id: expect.any(String)
-                })
-            })
-    })
+                });
+            });
+    });
 });
