@@ -22,4 +22,14 @@ describe('profile app', () => {
                 });
             });
     });
+    it('returns all profiles', () => {
+        return Profile.create({ name: 'cindy', favoriteCharacter: 'bender'})
+            .then(() => {
+                return request(app)
+                    .get('/profile');
+            })
+            .then(res => {
+                expect(res.body).toHaveLength(1);
+            });
+    });
 });
