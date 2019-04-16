@@ -2,6 +2,8 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Profile = require('../lib/models/Profile');
 
+// jest.mock('../lib/services/futuramaApi.js');
+
 describe('profile app', () => {
     beforeEach(() => {
         return Profile.drop();
@@ -17,7 +19,7 @@ describe('profile app', () => {
                 expect(res.body).toEqual({
                     name: 'Colin',
                     favoriteCharacter: 'Bender',
-                    tagline: expect.any(String),
+                    tagline: 'Bite my shiny metal ass',
                     _id: expect.any(String)
                 });
             });
