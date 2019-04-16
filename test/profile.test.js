@@ -23,7 +23,7 @@ describe('profile app', () => {
             });
     });
     it('returns all profiles', () => {
-        return Profile.create({ name: 'cindy', favoriteCharacter: 'bender'})
+        return Profile.create({ name: 'cindy', favoriteCharacter: 'bender' })
             .then(() => {
                 return request(app)
                     .get('/profile');
@@ -32,4 +32,33 @@ describe('profile app', () => {
                 expect(res.body).toHaveLength(1);
             });
     });
+    it('returns a profile by id', () => {
+        return Profile.create({ name: 'Colin', favoriteCharacter: 'Leela' })
+            .then(createdProfile => {
+                return request(app)
+                    .get(`/profile/${createdProfile._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({ name: 'Colin', favoriteCharacter: 'Leela', _id: expect.any(String) });
+            });
+    });
+    it('updates a profile by id', () => {
+        Profile.create({ name: 'Fred', favoriteCharacter: 'Zoidberg' })
+            .then(createdProfile => {
+                return request(app)
+                    .patch(`/profile/${createdProfile._id}`)
+                    .send({
+                        name: 'Fred',
+                        favoriteCharacter: 'Leela'
+                    });
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: 'Fred',
+                    favoriteCharacter: 'Leela',
+                    tagline: expect.any(String),
+                    _id: expect.any(String)
+                })
+            })
+    })
 });
